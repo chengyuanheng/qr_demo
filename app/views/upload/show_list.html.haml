@@ -1,0 +1,26 @@
+=render 'upload_file'
+
+%hr
+%table.table.table-hover.table-striped
+  %thead
+    %tr
+      %td address
+      %td name
+      %td type
+  %tbody
+    -@files.each do |file|
+      %tr
+        -case file.file_type
+        -when 'image'
+          %td
+            %a(href="#{file.address}" target="_blank" )
+              =image_tag(file.address,:width=>'80px',:height=>'80px', :alt=>file.name)
+        -when 'video'
+          %td
+            %a(href="#{file.address}" target="_blank" )
+              %video(controls="controls" src="#{file.address}")
+                您的浏览器不支持video标签
+        %td= file.name
+        %td= file.file_type
+
+=will_paginate @files, :previous_label=>'<-上一页',:next_label=>'下一页->'
